@@ -2,22 +2,48 @@
 
 ##
 
-The overview of the project:
+## The overview of the project:  
 I accepted a job from a client, who was requesting AWS cloud configuration work which needed to be handled in a secure and professional manner. 
 
 ##
 
-The high level job description request was:
+## **The high level job description request was:**
 "I’m ready to launch a production-grade web application on AWS and need the underlying infrastructure designed and built with security and high availability at its core. The workload will run on EC2, and general-purpose instances are fine; the focus is on a rock-solid architecture, not exotic hardware profiles.
 
 Here’s what I have in mind: a VPC with public and private subnets spread across at least two Availability Zones, an Application Load Balancer in front, Auto Scaling groups to keep capacity healthy, and tight security groups plus IAM roles that follow least-privilege rules. Logging to S3, monitoring and alerts through CloudWatch, and encrypted traffic everywhere (ACM certificates, HTTPS, TLS-enabled internal hops) are all must-haves. Wherever possible, I’d like the stack expressed as infrastructure-as-code—Terraform or CloudFormation—so I can version-control and reproduce everything.
 
-Deliverables
+**Deliverables**
 Architecture diagram (high-level and subnet-level)
 IaC templates or modules with clear variables and README
 Step-by-step deployment guide and rollback instructions
 Brief security checklist showing how OWASP/AWS best practices are met
 Final validation session in my account to confirm multi-AZ failover and basic load test success"
+
+##
+
+🛡️ ## **Security & Resilience Architecture**
+This project implements a Defense-in-Depth strategy, ensuring that the infrastructure is not only highly available but also hardened against modern attack vectors.
+
+1. Zero-Trust Network Design
+Isolated Database Tier: Database instances are placed in dedicated subnets with no Route Table entry to the Internet Gateway, preventing "phone-home" malware communication.
+
+Elimination of Port 22: By leveraging AWS Systems Manager (SSM) and Interface VPC Endpoints, the infrastructure allows for full administration without the need for SSH keys or public-facing Bastion hosts.
+
+Security Group Chaining: Implements a strict "Kill Chain" where the Database only accepts traffic from the App Tier, and the App Tier only accepts traffic from the ALB, preventing lateral movement.
+
+2. Active Threat Mitigation
+Intelligent WAF Filtering: An AWS WAF is deployed in front of the Application Load Balancer to inspect Layer 7 traffic, automatically rate-limiting IPs and blocking SQL Injection (SQLi) and Cross-Site Scripting (XSS) attempts.
+
+GuardDuty AI Monitoring: Continuous monitoring of VPC Flow Logs and CloudTrail events via Amazon GuardDuty to detect anomalous behavior, such as unauthorized API calls or compromised instances.
+
+Encryption in Transit: Implements End-to-End TLS (HTTPS). Traffic is encrypted from the client to the ALB and remains encrypted from the ALB to the EC2 instances on port 8080.
+
+3. Automated Reliability & "Chaos" Validation
+Multi-AZ Self-Healing: The infrastructure is distributed across two Availability Zones. In the event of a localized data center failure, the Auto Scaling Group (ASG) automatically redistributes capacity to maintain 100% uptime.
+
+Targeted Stress Testing: Validated the scaling policy using Grafana k6 to simulate high-computational load (SHA-256 hashing) and concurrent traffic spikes, confirming the system's ability to scale from 2 to 6 instances dynamically.
+
+Observability Dashboard: A custom CloudWatch Dashboard provides real-time visibility into CPU utilization, Request Count, and Healthy Host counts for rapid incident response.
 
 ##
 
@@ -46,3 +72,17 @@ Use the k6 tool to send traffic to the ALB's URL.
 Show the CloudWatch Dashboard I built for them.
 As the traffic climbs, show the CPU utilization rising, and show the Auto Scaling Group adding another server to handle the load.
 
+> [!NOTE]
+> This is a blue box for general info.
+
+> [!TIP]
+> This is a green box for tips/successes.
+
+> [!IMPORTANT]
+> This is a purple box for key security details.
+
+> [!WARNING]
+> This is an orange box for warnings.
+
+> [!CAUTION]
+> This is a red box for critical "danger" info.
