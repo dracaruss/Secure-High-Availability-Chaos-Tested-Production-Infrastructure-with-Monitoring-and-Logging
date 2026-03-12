@@ -21,17 +21,17 @@ Final validation session in my account to confirm multi-AZ failover and basic lo
 
 ##
 
-🛡️ ## **Security & Resilience Architecture**
+## **Security & Resilience Architecture**  
 This project implements a Defense-in-Depth strategy, ensuring that the infrastructure is not only highly available but also hardened against modern attack vectors.
 
-1. Zero-Trust Network Design
-Isolated Database Tier: Database instances are placed in dedicated subnets with no Route Table entry to the Internet Gateway, preventing "phone-home" malware communication.
+* 1. Zero-Trust Network Design
+* Isolated Database Tier: Database instances are placed in dedicated subnets with no Route Table entry to the Internet Gateway, preventing "phone-home" malware communication.
 
-Elimination of Port 22: By leveraging AWS Systems Manager (SSM) and Interface VPC Endpoints, the infrastructure allows for full administration without the need for SSH keys or public-facing Bastion hosts.
+* Elimination of Port 22: By leveraging AWS Systems Manager (SSM) and Interface VPC Endpoints, the infrastructure allows for full administration without the need for SSH keys or public-facing Bastion hosts.
 
-Security Group Chaining: Implements a strict "Kill Chain" where the Database only accepts traffic from the App Tier, and the App Tier only accepts traffic from the ALB, preventing lateral movement.
+* Security Group Chaining: Implements a strict "Kill Chain" where the Database only accepts traffic from the App Tier, and the App Tier only accepts traffic from the ALB, preventing lateral movement.
 
-2. Active Threat Mitigation
+* 2. Active Threat Mitigation
 Intelligent WAF Filtering: An AWS WAF is deployed in front of the Application Load Balancer to inspect Layer 7 traffic, automatically rate-limiting IPs and blocking SQL Injection (SQLi) and Cross-Site Scripting (XSS) attempts.
 
 GuardDuty AI Monitoring: Continuous monitoring of VPC Flow Logs and CloudTrail events via Amazon GuardDuty to detect anomalous behavior, such as unauthorized API calls or compromised instances.
