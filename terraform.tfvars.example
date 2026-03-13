@@ -1,0 +1,38 @@
+# =============================================================================
+# terraform.tfvars.example — Template File
+# =============================================================================
+# INSTRUCTIONS: 
+# 1. Copy this file to 'terraform.tfvars'
+# 2. Fill in your specific AWS details below.
+# =============================================================================
+
+project_name = "myapp"
+environment  = "dev"
+aws_region   = "us-east-1"
+aws_profile  = "your-aws-profile-here"
+
+# ── Networking ───────────────────────────────────────────────────────────────
+vpc_cidr = "10.0.0.0/16"
+az_count = 2
+
+# ── Compute ──────────────────────────────────────────────────────────────────
+instance_type         = "t3.micro"
+ami_id                = "" # Leave empty for latest Amazon Linux 2023
+key_pair_name         = "" # Leave empty to use SSM Session Manager (Recommended)
+asg_min_size          = 1
+asg_max_size          = 3
+asg_desired_capacity  = 1
+root_volume_size      = 20
+root_volume_encrypted = true
+
+# ── Application ──────────────────────────────────────────────────────────────
+app_port          = 8080
+health_check_path = "/health"
+
+# ── Monitoring ───────────────────────────────────────────────────────────────
+alarm_email               = "your-email@example.com"
+log_retention_days        = 7
+access_log_retention_days = 7
+
+# ── Scaling ──────────────────────────────────────────────────────────────────
+cpu_target_value = 60
