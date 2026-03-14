@@ -46,7 +46,7 @@ I accepted a job from a client, who was requesting a particular AWS cloud config
 
 # **The high level job description by the client**  
 > [!IMPORTANT]
-> "I’m ready to launch a production-grade web application on AWS and need the underlying infrastructure designed and built with security and high availability at > its core. The workload will run on EC2, and general-purpose instances are fine; the focus is on a rock-solid architecture, not exotic hardware profiles.
+> "I’m ready to launch a production-grade web application on AWS and need the underlying infrastructure designed and built with security and high availability at its core. The workload will run on EC2, and general-purpose instances are fine; the focus is on a rock-solid architecture, not exotic hardware profiles.
 >
 >Here’s what I have in mind: a VPC with public and private subnets spread across at least two Availability Zones, an Application Load Balancer in front, Auto Scaling groups to keep capacity healthy, and tight security groups plus IAM roles that follow least-privilege rules. Logging to S3, monitoring and alerts through CloudWatch, and encrypted traffic everywhere (ACM certificates, HTTPS, TLS-enabled internal hops) are all must-haves. Wherever possible, I’d like the stack expressed as infrastructure-as-code—Terraform or CloudFormation—so I can version-control and reproduce everything.
 
